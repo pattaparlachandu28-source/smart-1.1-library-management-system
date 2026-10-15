@@ -3,5 +3,14 @@ import org.springframework.context.annotation.*; import org.springframework.secu
 @Configuration public class SecurityConfig {
  @Bean PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();}
  @Bean SecurityFilterChain filterChain(HttpSecurity http)throws Exception{return http.csrf(c->c.disable()).cors(c->{}).sessionManagement(s->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).authorizeHttpRequests(a->a.anyRequest().permitAll()).build();}
- @Bean CorsConfigurationSource corsConfigurationSource(){CorsConfiguration c=new CorsConfiguration();c.setAllowedOriginPatterns(List.of("http://localhost:5173","http://127.0.0.1:5173","http://localhost:5180","http://127.0.0.1:5180","https://*.vercel.app"));c.setAllowedMethods(List.of("GET","POST","PUT","PATCH","DELETE","OPTIONS"));c.setAllowedHeaders(List.of("Authorization","Content-Type"));c.setAllowCredentials(true);UrlBasedCorsConfigurationSource s=new UrlBasedCorsConfigurationSource();s.registerCorsConfiguration("/**",c);return s;}
+ @Bean CorsConfigurationSource corsConfigurationSource(){
+  CorsConfiguration c=new CorsConfiguration();
+  c.setAllowedOriginPatterns(List.of("http://localhost:*","http://127.0.0.1:*","https://*.vercel.app","*"));
+  c.setAllowedMethods(List.of("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
+  c.setAllowedHeaders(List.of("*"));
+  c.setAllowCredentials(true);
+  UrlBasedCorsConfigurationSource s=new UrlBasedCorsConfigurationSource();
+  s.registerCorsConfiguration("/**",c);
+  return s;
+ }
 }

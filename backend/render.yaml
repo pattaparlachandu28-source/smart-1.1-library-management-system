@@ -5,6 +5,7 @@ services:
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     plan: free
+    healthCheckPath: /api/health
     envVars:
       - key: DB_URL
         sync: false
@@ -16,5 +17,4 @@ services:
         generateValue: true
       - key: LIBRARIAN_SETUP_KEY
         sync: false
-      - key: SERVER_PORT
-        value: 8080
+

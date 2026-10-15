@@ -9,6 +9,7 @@ RUN mvn package -DskipTests -B
 # ── Runtime stage ──
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/target/smart-library-*.jar app.jar
+ENV PORT=8080
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["sh", "-c", "java -Dserver.port=${PORT:-8080} -jar app.jar"]
